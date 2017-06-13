@@ -29,3 +29,16 @@ test('should reference the explicitly bound object via Function.prototype.apply(
   t.is(f.apply(obj), 42)
 })
 
+test('implicitly lost due to explicit reference assignment', t => {
+  function f1 () { return this.a}
+  const obj = {
+    a: 42,
+    method: f1
+  }
+  const f2 = obj.method
+  const error = t.throws(() => {
+    f2()
+  }, TypeError)
+  t.is(error.message, "Cannot read property 'a' of undefined")
+  t.is(f2, f1)
+})
