@@ -30,7 +30,7 @@ test('should reference the explicitly bound object via Function.prototype.apply(
 })
 
 test('implicitly lost due to explicit reference assignment', t => {
-  function f1 () { return this.a}
+  function f1 () { return this.a }
   const obj = {
     a: 42,
     method: f1
@@ -44,14 +44,24 @@ test('implicitly lost due to explicit reference assignment', t => {
 })
 
 test('implicitly lost due to implicit reference assignment', t => {
-    function f1 () { return this.a}
-    function f2 (fn) { fn() }
-    const obj = {
-        a: 42,
-        method: f1
-    }
-    const error = t.throws(() => {
-        f2(obj.method)
-    }, TypeError)
-    t.is(error.message, "Cannot read property 'a' of undefined")
+  function f1 () { return this.a }
+  function f2 (fn) { fn() }
+  const obj = {
+    a: 42,
+    method: f1
+  }
+  const error = t.throws(() => {
+    f2(obj.method)
+  }, TypeError)
+  t.is(error.message, "Cannot read property 'a' of undefined")
+})
+
+test('should reference the hard bound object via wrapper function', t => {
+  function f1 () { return this.a }
+  function f2 () { return f1.call(obj) }
+  const obj = {
+    a: 42
+  }
+  t.is(f2(), 42)
+  t.is(f2.call(global), 42)
 })
