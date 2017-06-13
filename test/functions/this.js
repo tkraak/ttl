@@ -42,3 +42,16 @@ test('implicitly lost due to explicit reference assignment', t => {
   t.is(error.message, "Cannot read property 'a' of undefined")
   t.is(f2, f1)
 })
+
+test('implicitly lost due to implicit reference assignment', t => {
+    function f1 () { return this.a}
+    function f2 (fn) { fn() }
+    const obj = {
+        a: 42,
+        method: f1
+    }
+    const error = t.throws(() => {
+        f2(obj.method)
+    }, TypeError)
+    t.is(error.message, "Cannot read property 'a' of undefined")
+})
