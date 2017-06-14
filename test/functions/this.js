@@ -65,3 +65,12 @@ test('should reference the hard bound object via wrapper function', t => {
   t.is(f2(), 42)
   t.is(f2.call(global), 42)
 })
+
+test('should reference the hard bound object via Function.property.bind()', t => {
+  function f1 () { return this.a }
+  const obj = {
+    a: 42
+  }
+  const f2 = f1.bind(obj)
+  t.is(f2(), 42)
+})
