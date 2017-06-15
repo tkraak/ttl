@@ -74,3 +74,14 @@ test('should reference the hard bound object via Function.property.bind()', t =>
   const f2 = f1.bind(obj)
   t.is(f2(), 42)
 })
+
+test('should reference the `new` bound object', t => {
+  function F (a) {
+    this.a = a
+    t.is(typeof this, 'object')
+    t.true(this instanceof F)
+  }
+  const obj = new F(42)
+  t.is(typeof obj, 'object')
+  t.is(obj.a, 42)
+})
