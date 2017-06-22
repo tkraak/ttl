@@ -85,3 +85,13 @@ test('should reference the `new` bound object', t => {
   t.is(typeof obj, 'object')
   t.is(obj.a, 42)
 })
+
+test('the arrow-function should lexically capture the `this` of f1', t => {
+  function f1 () {
+    return (a) => { return this.a }
+  }
+  const obj1 = { a: 42 }
+  const obj2 = { a: 43 }
+  const f2 = f1.call(obj1)
+  t.is(f2.call(obj2), 42)
+})
