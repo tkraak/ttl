@@ -7,8 +7,8 @@
     "lint": "standard | snazzy"
   },
   "devDependencies": {
-    "ava": "^0.25.0",
-    "snazzy": "7.1.1",
-    "standard": "11.0.1"
+    "ava": "^1.4.1",
+    "snazzy": "8.0.0",
+    "standard": "12.0.1"
   }
 }
